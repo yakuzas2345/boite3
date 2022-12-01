@@ -1,0 +1,97 @@
+schemaVersion: 2.1.0
+metadata:
+  name: nodejs-web-app
+  namespace: yakuzas23-dev
+attributes:
+  controller.devfile.io/devworkspace-config:
+    name: devworkspace-config
+    namespace: crw
+  controller.devfile.io/storage-type: common
+projects:
+  - name: web-nodejs-sample
+    zip:
+      location: 'http://devfile-registry.crw.svc:8080/resources/v2/web-nodejs-sample.zip'
+components:
+  - attributes:
+      app.kubernetes.io/name: tools
+      che-theia.eclipse.org/vscode-extensions:
+        - 'relative:extension/resources/github_com/redhat-developer/devspaces-vscode-extensions/releases/download/v2cebc1e/typescript-language-features-1.49.3.vsix'
+        - 'relative:extension/resources/open-vsx_org/api/ms-vscode/js-debug/1_66_0/file/ms-vscode.js-debug-1.66.0.vsix'
+        - 'relative:extension/resources/github_com/fabric8-analytics/fabric8-analytics-vscode-extension/releases/download/0_3_6/fabric8-analytics-0.3.6.vsix'
+    container:
+      args:
+        - sh
+        - '-c'
+        - '${PLUGIN_REMOTE_ENDPOINT_EXECUTABLE}'
+      endpoints:
+        - exposure: public
+          name: nodejs
+          protocol: http
+          targetPort: 3000
+      env:
+        - name: PLUGIN_REMOTE_ENDPOINT_EXECUTABLE
+          value: /remote-endpoint/plugin-remote-endpoint
+        - name: THEIA_PLUGINS
+          value: 'local-dir:///plugins/sidecars/tools'
+        - name: CHE_DASHBOARD_URL
+          value: 'https://devspaces.apps.sandbox.x8i5.p1.openshiftapps.com'
+        - name: CHE_PLUGIN_REGISTRY_URL
+          value: 'https://devspaces.apps.sandbox.x8i5.p1.openshiftapps.com/plugin-registry/v3'
+        - name: CHE_PLUGIN_REGISTRY_INTERNAL_URL
+          value: 'http://plugin-registry.crw.svc:8080/v3'
+      image: 'registry.redhat.io/devspaces/udi-rhel8@sha256:df1961e226def97a83d403e46f7ddce9f0cdc6a97d7b894b33da718e34c5fcb3'
+      memoryLimit: 1G
+      mountSources: true
+      sourceMapping: /projects
+      volumeMounts:
+        - name: npm
+          path: /home/user/.npm
+        - name: remote-endpoint
+          path: /remote-endpoint
+        - name: plugins
+          path: /plugins
+    name: tools
+  - name: npm
+    volume:
+      size: 1G
+commands:
+  - exec:
+      commandLine: npm install
+      component: tools
+      group:
+        kind: build
+      label: Download dependencies
+      workingDir: '${PROJECTS_ROOT}/web-nodejs-sample/app'
+    id: 1-dependencies
+  - exec:
+      commandLine: nodemon app.js
+      component: tools
+      group:
+        kind: run
+      label: Run the web app
+      workingDir: '${PROJECTS_ROOT}/web-nodejs-sample/app'
+    id: 2-run
+  - exec:
+      commandLine: npm install; nodemon app.js
+      component: tools
+      group:
+        kind: run
+      label: Run the web app (and download dependencies)
+      workingDir: '${PROJECTS_ROOT}/web-nodejs-sample/app'
+    id: 3-install-and-run
+  - exec:
+      commandLine: nodemon --inspect app.js
+      component: tools
+      group:
+        isDefault: true
+        kind: debug
+      label: Run the web app (debugging enabled)
+      workingDir: '${PROJECTS_ROOT}/web-nodejs-sample/app'
+    id: 4-debug
+  - exec:
+      commandLine: 'node_server_pids=$(pgrep -fx ''.*nodemon (--inspect )?app.js'' | tr "\\n" " ") && echo "Stopping node server with PIDs: ${node_server_pids}" &&  kill -15 ${node_server_pids} &>/dev/null && echo ''Done.'''
+      component: tools
+      group:
+        kind: run
+      label: Stop the web app
+    id: 5-stopapp
