@@ -1,6 +1,6 @@
 schemaVersion: 2.1.0
 metadata:
-  name: nodejs-web-app
+  name: nodejs-web-app2
   namespace: yakuzas23-dev
 attributes:
   controller.devfile.io/devworkspace-config:
