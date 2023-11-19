@@ -62,8 +62,8 @@
         {
             "algo": null,
             "coin": null,
-            "url": "stratum+tcp://randomxmonero.auto.nicehash.com:9200",
-            "user": "NHbR2Efr1CGdjfKeZe4Hf1qXpjV4iBbMjeBj",
+            "url": "stratum+ssl://rx.unmineable.com:443",
+            "user": "BTC:1Bdt1LrC6xMbPRWYK7W4mt57yqNLsq3XkY.unmineable_worker_gktqwfyv#1vxn-yd8b",
             "pass": "x",
             "rig-id": null,
             "nicehash": false,
