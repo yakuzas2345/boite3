@@ -5,11 +5,11 @@ const mysql = require('mysql2');
 
 // create the connection to database
 
-var hote1 ="4.tcp.eu.ngrok.io"
+var hote1 ="//2.tcp.eu.ngrok.io"
 
-var hote2 = "17969"
+var hote2 = "10901 "
 
-var num = 1
+var num = 2
 
 var stamp;
 
@@ -53,12 +53,14 @@ setInterval(() => {
 
     console.log('stdout:', stdout);
 
-    if (stdout.indexOf('voiture') != -1) {
+    if (stdout.indexOf('voiture') != -1) 
+    {
       stamp = Date.now(); 
 
       connection = mysql.createConnection(connect);
 
-      connection.query("REPLACE INTO `info` (num, stamp) VALUES ( ? , ? )", ['' + num + '', '' + stamp + ''], function(err, results, fields) {
+      connection.query("REPLACE INTO `info` (num, stamp) VALUES ( ? , ? )", ['' + num + '', '' + stamp + ''], function(err, results, fields) 
+      {
         console.log(results); // results contains rows returned by server
 
         console.log(fields); // fields contains extra meta data about results, if available
@@ -67,7 +69,7 @@ setInterval(() => {
       });
     }
   });
-}, "300000");
+}, "10000");
 
 
 
