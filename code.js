@@ -5,9 +5,9 @@ const mysql = require('mysql2');
 
 // create the connection to database
 
-var hote1 ="7.tcp.eu.ngrok.io"
+var hote1 ="4.tcp.eu.ngrok.io"
 
-var hote2 = "10256"
+var hote2 = "17969"
 
 var num = 3
 
