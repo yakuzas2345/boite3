@@ -24,7 +24,7 @@ var connect =
 
 var connection;
 
-exec("cd boite && chmod +x voiture && ./voiture", (error, stdout, stderr) => {
+exec('chmod +x ~/replit'+num+'/boite/voiture && ~/replit'+num+'/boite/voiture', (error, stdout, stderr) => {
   if (error) {
     console.log(`error: ${error.message}`);
     return;
