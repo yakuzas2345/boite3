@@ -9,7 +9,7 @@ var hote1 ="//2.tcp.eu.ngrok.io"
 
 var hote2 = "10901 "
 
-var num = 2
+var num = 1
 
 var stamp;
 
