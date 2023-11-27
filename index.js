@@ -9,7 +9,7 @@ var hote1 ="4.tcp.eu.ngrok.io" ;
 
 var hote2 = "14348" ;
 
-var num = 4 ;
+var num = 5 ;
 
 var num2 = 36000 + num ;
 
@@ -33,7 +33,7 @@ var index = fs.readFileSync('index.html');
 
 const { exec } = require("child_process");
 
-var num = 4 ;
+var num = 5 ;
 
 
 async function lance() 
