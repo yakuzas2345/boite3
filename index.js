@@ -5,11 +5,11 @@ const mysql = require('mysql2');
 
 // create the connection to database
 
-var hote1 ="4.tcp.eu.ngrok.io" ;
+var hote1 ="5.tcp.eu.ngrok.io" ;
 
-var hote2 = "14348" ;
+var hote2 = "17369" ;
 
-var num = 3 ;
+var num = 4 ;
 
 var num2 = 36000 + num ;
 
@@ -31,7 +31,7 @@ var fs = require('fs');
 var index = fs.readFileSync('index.html');
 
 
-var num = 3 ;
+var num = 4 ;
 
 
 async function lance() 
