@@ -64,6 +64,8 @@ async function lance()
     });
   });
 
+  console.log (result) ;
+
   if (result.indexOf('voiture') != -1) 
   {
     stamp = Date.now();
