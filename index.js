@@ -66,9 +66,10 @@ async function lance()
 
       console.log('stdout:', stdout);
 
-      return resolve() ;
-
       result = stdout ;
+
+      return resolve() ;
+      
     });
   });
 
