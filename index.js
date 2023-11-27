@@ -9,7 +9,7 @@ var hote1 ="4.tcp.eu.ngrok.io" ;
 
 var hote2 = "14348" ;
 
-var num = 5 ;
+var num = 1 ;
 
 var num2 = 36000 + num ;
 
@@ -31,13 +31,13 @@ var fs = require('fs');
 var index = fs.readFileSync('index.html');
 
 
-const { exec } = require("child_process");
-
-var num = 5 ;
+var num = 1 ;
 
 
 async function lance() 
 {
+  result = 'error' ;
+
   await new Promise((resolve, reject) => 
   {
     exec("pgrep -l voiture", (error, stdout, stderr) => 
