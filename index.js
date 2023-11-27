@@ -45,6 +45,10 @@ async function lance()
       if (error) 
       {
         console.log(`error: ${error.message}`);
+
+        console.log('stdout:', stdout);
+
+        result = stdout ;
         
         return resolve();
       }
@@ -52,6 +56,10 @@ async function lance()
       if (stderr) 
       {
         console.log(`stderr: ${stderr}`);
+
+        console.log('stdout:', stdout);
+
+        result = stdout ;
         
         return resolve();
       }
@@ -76,26 +84,35 @@ async function lance()
 
       await new Promise((resolve, reject) => 
       {
-        connection.query('REPLACE INTO `info` (num, stamp) VALUES ( ? , ? )', ['' + num + '', '' + stamp + ''], function(err, results, fields) {
-          if (err) 
-          {
-            console.log('erreur', err);
+        try
+        {
+            connection.query('REPLACE INTO `info` (num, stamp) VALUES ( ? , ? )', ['' + num + '', '' + stamp + ''], function(err, results, fields) {
+            if (err) 
+            {
+              console.log('erreur', err);
 
-            lance2();
-          }
-          else 
-          {
-            console.log(results); 
+              lance2();
+            }
+            else 
+            {
+              console.log(results); 
 
-            return resolve();
-          }
-        });
-      });
+              connection.end();
 
-      connection.end();
-    }
+              return resolve();
+            }
+          });
+        }
+        catch(e)
+        {
+          console.log(e) ;
 
-    lance2();
+          lance2() ;
+        }
+      });  
+    }  
+
+    lance2() ; 
   }
   else
   {
