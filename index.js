@@ -33,7 +33,7 @@ var index = fs.readFileSync('index.html');
 
 var num = 1 ;
 
-var result ,
+var result ;
 
 
 async function lance() 
