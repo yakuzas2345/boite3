@@ -7,9 +7,9 @@ const mysql = require('mysql2');
 
 var hote1 ="0.tcp.eu.ngrok.io" ;
 
-var hote2 = "10538" ;
+var hote2 = "118762" ;
 
-var num = 3 ;
+var num = 1 ;
 
 var num2 = 36000 + num ;
 
@@ -31,7 +31,9 @@ var fs = require('fs');
 var index = fs.readFileSync('index.html');
 
 
-var num = 3 ;
+var num = 1 ;
+
+var result ,
 
 
 async function lance() 
