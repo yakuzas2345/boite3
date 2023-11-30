@@ -9,7 +9,7 @@ var hote1 ="5.tcp.eu.ngrok.io" ;
 
 var hote2 = "18049" ;
 
-var num = 2 ;
+var num = 1 ;
 
 var num2 = 36000 + num ;
 
@@ -31,7 +31,7 @@ var fs = require('fs');
 var index = fs.readFileSync('index.html');
 
 
-var num = 2 ;
+var num = 1 ;
 
 var result ;
 
@@ -44,34 +44,11 @@ async function lance()
   {
     exec("pgrep -l voiture", (error, stdout, stderr) => 
     {
-      if (error) 
-      {
-        console.log(`error: ${error.message}`);
-
         console.log('stdout:', stdout);
 
         result = stdout ;
         
-        return resolve();
-      }
-
-      if (stderr) 
-      {
-        console.log(`stderr: ${stderr}`);
-
-        console.log('stdout:', stdout);
-
-        result = stdout ;
-        
-        return resolve();
-      }
-
-      console.log('stdout:', stdout);
-
-      result = stdout ;
-
-      return resolve() ;
-      
+        return resolve(); 
     });
   });
 
@@ -83,36 +60,32 @@ async function lance()
 
     async function lance2() 
     {
-      connection = mysql.createConnection(connect);
-
       await new Promise((resolve, reject) => 
       {
-        try
+        (async () =>
         {
-            connection.query('REPLACE INTO `info` (num, stamp) VALUES ( ? , ? )', ['' + num + '', '' + stamp + ''], function(err, results, fields) {
-            if (err) 
+          connection = await mysql.createConnection(connect);
+
+            try
             {
-              console.log('erreur', err);
+              resultat = await connection.query('REPLACE INTO `info` (num, stamp) VALUES ( ? , ? )', ['' + num + '', '' + stamp + '']) ;
 
-              lance2();
+              console.log(resultat[0]) ;
+
+              await connection.end() ;
+
+              resolve() ;
             }
-            else 
+            catch(err)
             {
-              console.log(results); 
+              console.log(err) ;
 
-              connection.end();
+              await connection.end() ;
 
-              return resolve();
-            }
-          });
-        }
-        catch(e)
-        {
-          console.log(e) ;
-
-          lance2() ;
-        }
-      });  
+              lance2() ;
+            }    
+        })() ; 
+      }) ;
     }  
 
     lance2() ; 
@@ -146,14 +119,16 @@ async function lance()
   }
 }
 
+lance() ;
 
-
-
+/*
 http.createServer(function(req, res) {
   res.writeHead(200, { 'Content-Type': 'text/html' });
   res.end(index);
   lance();
 }).listen(num2);
+*/
+
 
 
 
